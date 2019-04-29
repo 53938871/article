@@ -125,3 +125,24 @@ function asyncSSnValidator(control: FormControl): Observable<any>{  //运回Obse
 
 
 
+验证模板驱动表单 
+当创建模板驱动表单时，能够使用指令，因此可以将验证器函数包装在指令里以便在模板中使用它们。
+@Directive({    //使用@angular/core模板中的@Directive注解声明一条指令
+    selector: '[ssn]',  //将该指令的选择器定义为一个html属性
+	providers: [{
+	    provide: NG_VALIDATORS,  //将ssnValidator注册为NG_VALIDATORSprovider
+		useValue: ssnValidator,
+		multi: true
+	}]
+})
+class SsnValidatorDirective{}
+用法：<input type="text" name="my-ssn" ngModel ssn>
+
+验证示例注册表单：
+<form #f="ngForm" (ngSubmit)="onSubmit(f.value, f.value)" novalidate> //将表单的值和有效性状态传给onSubmit方法
+<div>userName:<input type="text" name="userName" ngModel required>
+<span [hidden]="!f.from.hasError('required', 'userName')">用记名不能为空</span>
+<div>ssn:<input type="text" name="ssn" ngModel ssn>
+<span [hidden]="!f.form.hasError('ssn','ssn')">ssn is invalid</span>
+....
+<span [hidden]="!f.form.hasError('minlength', ['password1', 'password2'])">密码1和密码2都太短</span>
