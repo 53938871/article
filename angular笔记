@@ -35,3 +35,23 @@ template: `<div><h2>parent</h2><child><div class='.header'>这是传给子组件
 @ViewChild('child1')
 firstChild: ChildComponent;
 然后就可以调用子组件的方法了。<button (click)="child1.greet('xxx')">send</button>
+
+
+
+模板驱动表单有3个主要的指令:NgModel, NgModelGroup,NgForm
+NgForm表示整个表单的指令，它会自动附加到每个<form>元素，NgForm隐式的创建FormGroup类的一个实例。NgForm有多个选择器，可用于将NgForm附加到非<form>元素：
+<div ngForm></div> 属性选择器; <ngForm></ngForm>元素选择器
+如果要排除特定的<form>，使其不被Angular处理，请使用ngNoForm属性。可以创建一个引用NgForm实例的本地变量<form #f="ngForm"></form>  <pre>{{f.value | json}} <pre>
+将ngModel添加到元素时，需要使用name属性 <input type="text" name="userName" ngModel /> 也可以创建一个引用变量<input type="text" name="userName" #c="ngModel" />
+{{c.value}}; 
+<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+   <div ngModelGroup="fullName"> //ngModelGroup属性需要一个字符串值，它将成为属性名称，表示带有子字段值的嵌套的fullName
+   <input type="text" name="firstName" ngModel>
+   <input type="text" name="lastName" ngModel>
+   </div>
+</form>
+<pre>First Name: {{ f.value.fullname.firstName }}
+
+
+
+
