@@ -28,3 +28,10 @@ template: `<div><h2>parent</h2><child><div class='.header'>这是传给子组件
 父组件的template中有子组件选择器，那么父组件中的child中的内容将被传入子组件来替代<ng-content>中的内容。 可以有多个<ng-content>可以通过选择器来选择传
 入的父组件的内容<ng-content select=".header"></ng-content>
 
+父组件调用子组件,暴露子组件中的API.
+<child #child1></child>
+<child #child2></child>
+只需要在父组件里声明一个变量，前用@ViewChild对其进行注解：
+@ViewChild('child1')
+firstChild: ChildComponent;
+然后就可以调用子组件的方法了。<button (click)="child1.greet('xxx')">send</button>
