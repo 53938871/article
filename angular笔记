@@ -1,0 +1,30 @@
+.功能模块只需要导入:CommonModule，不需要导入BrowserModule
+类也可以成接口使用，只要实现同样的方法就会被当成实现。 class A; class B implement A
+
+.如果在Component中使用多态中的类，可以在@Component中使用Providers:[..],组件级别的provider. provider有2个级别，Component和Module.如果在component
+中指定了一个service的子类，就使用providers:[{provide:父类名,useClass:子类名}]
+
+providers:[{provide:xxx, useFactory:(isDev)=>{...}, deps:['常量名']}] ;deps就是useFactory所依赖的项，“常量名”会被当成isDev参数。如果要给“常量名”
+赋值，就在@NgModule中的Providers中使用{provide:"常量名", useValue:"值"}; provide顺序，自己->父组件->Module
+
+如果想确保一个特殊的可注入服务对子组件和其它组件不可见，可使用viewProviders替代Providers.
+
+如果想让Angular知道绑定的是特性而不是(Dom属性)，需要加attr.前缀<input [attr.value]="greeting">
+
+父类传子类时@Input，如果用[]表示绑定动态属性。如果是一个固定的值则不需要加[].<order [stock]="stock" num=100> stock就是动态的值,num是固定的。
+
+@Output自定义事件的名称与输出属性的名称是一致的，也可以用别名.
+子组件: let lastPrice: EmeitEvent = new EmeitEvent(); 要调用父组件的方法只需要调用 lastPrice.emit("值");
+父组件： <parent (lastPrice)="父组件里的方法"></parent>
+父子组件的lastPrice要一样，子组件的lasPrice属性要跟父组件的事件名称一样。
+
+<ng-content></ng-content>
+子组件：
+selector: 'child',
+template: `<div><h2>child</h2><ng-content></ng-content>`
+父组件：
+selector: 'app',
+template: `<div><h2>parent</h2><child><div class='.header'>这是传给子组件的内容</div></child>`
+父组件的template中有子组件选择器，那么父组件中的child中的内容将被传入子组件来替代<ng-content>中的内容。 可以有多个<ng-content>可以通过选择器来选择传
+入的父组件的内容<ng-content select=".header"></ng-content>
+
