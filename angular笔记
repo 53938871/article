@@ -93,3 +93,35 @@ constructor(fb: FormBuilder) {
 	  })
    });
 } 
+
+
+
+
+验证器是符合以下接口的函数：
+interface ValidatorFn {
+   (c: AbstractControl): {[key: string]: any};//类型声明{[key:string]:any}描述了一个对象字面量，其属性名称是字符串，值可以是任意类型  
+}
+验证函数的参数AbstractControl是FormControl, FromGroup, FormArray的超类
+Angular附带了许多预定义的验证器:required, minLength,maxLength, pattern.定义在@angular/forms中的Validators类中。
+import {FormControl, Validators} from '@angular/forms';
+let usernameControl = new FormControl('', Validators.required);//第一个参数是默认值，第二个参数是验证器函数
+可以包含多个
+let usernameControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
+let isValid: boolean = usernameControl.valid;
+错误对象: let errors: {[key: string]: any} = usernameControl.errors;
+自定义验证器：
+function ssnValidator(control: FormControl): any { //此函数的签名符合ValidatorFn接口。
+   
+}
+
+formGroup.hasError('required', 'userName') 条件来显示错误信息，参数1验证字段的名称，参数2字段
+
+还有异步验证器:
+function asyncSSnValidator(control: FormControl): Observable<any>{  //运回Observable
+
+}
+
+
+
+
+
