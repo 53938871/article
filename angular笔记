@@ -54,4 +54,42 @@ NgForm表示整个表单的指令，它会自动附加到每个<form>元素，Ng
 
 
 
+响应式表单:FormGroup, FormControl, FromArray(多个同名的)
+FormGroup->formGroupName; FormControl->formControlName; FormArray->formArrayName;
+formGroup表示整个表单 <form [formGroup]="fromModel"></form>
+formGroup可以嵌套formGroup
+<form [formGropu]="formModel">
+  <div formGroupName="dateRange">
+     <input type="date" formControlName="from">
+	 <input type="date" fromControlName="to">
+  </div>
+</form>
 
+formModel: FormGroup = new FormGroup({
+   emails: new FormArray([ //创建一个将表示整个表单的FormGroup
+       new FormControl() //为email集合使用FormArray,允许用户输入多个电子邮件
+	 ])
+   });
+
+   
+this.formModel = new FormGroup({
+   'userName': new FormControl(),
+   'ssn': new FormControl(),
+   'passwordsGroup': new FormGroup({
+      'password': new FormControl(),
+	  'pconfirm': new FormControl()
+	})
+   });
+ }
+ 
+使用FormBuilder更方便：
+constructor(fb: FormBuilder) {
+   this.formModel = fb.group({
+      'userName': [''],
+	  'ssn': [''],
+	  'passwordsGrop': fb.group({ //与FromGroup一样，FormBuilder允许创建嵌套组;FormBuilder.group()
+	      'password': [''], //方法接受具有额外配置参数的对象作为最后一个参数。可以用它来指定组验证器。
+		  'pconfirm': ['']
+	  })
+   });
+} 
