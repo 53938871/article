@@ -148,4 +148,8 @@ class SsnValidatorDirective{}
 <span [hidden]="!f.form.hasError('minlength', ['password1', 'password2'])">密码1和密码2都太短</span>
 
 
-如果用到懒加载的话 loadChildren: 'app/home/home.module#HomeModule' 的话一定不能在app.module里import懒加载的包，不然会报错。懒加载不能变成立即加载。
+如果使用懒加载，{path: "major", loadChildren: "./../component/major/major.module#MajorModule"}，就可以在MajorModule使用路由""指定一个默认的组件
+const routes: Routes = [{path: "", component: ListMajorComponent, children: [
+  {path: "edit", component: EditMajorComponent}
+]}];
+如果不是懒加载，就要使用路径名称
