@@ -146,3 +146,6 @@ class SsnValidatorDirective{}
 <span [hidden]="!f.form.hasError('ssn','ssn')">ssn is invalid</span>
 ....
 <span [hidden]="!f.form.hasError('minlength', ['password1', 'password2'])">密码1和密码2都太短</span>
+
+
+如果用到懒加载的话 loadChild: 'app/home/home.module#HomeModule' 的话一定不能在app.module里import懒加载的包，不然会报错。懒加载不能变成立即加载。
