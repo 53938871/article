@@ -153,3 +153,23 @@ const routes: Routes = [{path: "", component: ListMajorComponent, children: [
   {path: "edit", component: EditMajorComponent}
 ]}];
 如果不是懒加载，就要使用路径名称
+
+
+===================================
+不同的路径指向同一个component
+<li><a [routerLink]="['/items/8']">Rashion</a></li>
+<li><a [routerLink]="['/items/2']">Vegitables</a></li>
+<li><a [routerLink]="['/items/3']">Fruits</a></li>
+<li><a [routerLink]="['/items/7']">Other</a></li>
+ 为了监听/items/:id 中的id的变化，我们就要监听params的变化 
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ){
+	this.route.params.subscribe(params => {
+	      console.log('URL Params', params);
+	      let type = params.type;
+	      console.log(type);
+	  });
+  }
+  
